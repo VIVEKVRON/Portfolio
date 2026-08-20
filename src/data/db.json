@@ -1,0 +1,251 @@
+{
+  "profile": {
+    "name": "VIVEK V RON",
+    "roles": [
+      "SOFTWARE DEVELOPER"
+    ],
+    "summary": "Software developer with hands-on experience building production-quality full-stack applications using Java, Spring Boot, and React. Skilled in designing scalable backend systems, working with cloud platforms, and applying machine learning to solve real-world problems. Published researcher with two IEEE conference papers under review.",
+    "locationBased": "HUBLI BASED",
+    "locationLiving": "BENGALURU LIVING",
+    "addressLine1": "I am Hubli Based,",
+    "addressLine2": "Currently studying and living in Bengaluru.",
+    "email": "vivekvron@gmail.com",
+    "phone": "+91 8088753429",
+    "linkedin": "https://www.linkedin.com/in/vivek-ron-96a27a302",
+    "github": "https://github.com/VIVEKVRON",
+    "instagram": "https://www.instagram.com/ron.vivek?igsh=MTRkOWs0Y2luMm9uMA==",
+    "ppf": "/profile.jpg",
+    "techStack": [
+      "JAVA",
+      "SPRING",
+      "REACT",
+      "PYTHON",
+      "ML",
+      "GCP"
+    ]
+  },
+  "projects": [
+    {
+      "id": "1787255746441",
+      "title": "Context-Aware Candidate Ranking Pipeline | India AI Hiring Challenge",
+      "description": "Engineered a Two-Stage Hybrid AI architecture to replace rigid boolean ATS keyword filters with a mathematically grounded semantic search system, evaluating candidates on true trajectory and implicit capabilities.\n\nArchitected a broad dense retrieval infrastructure utilizing a BAAI/bge-m3 Bi-Encoder and a Qdrant Vector Database to dynamically parse and embed over 10,000 nested JSON candidate profiles into a highly searchable vector space.\n\nDeployed a Qwen3-Reranker-0.6B Cross-Encoder to simultaneously evaluate complex job descriptions and candidate histories, utilizing self-attention mechanisms to generate explainable AI confidence logit scores.\n\nOptimized the pipeline for production scalability on local NVIDIA GPUs by engineering memory-safe inference protocols, including strict mini-batching, dynamic eos_token padding, and explicit VRAM garbage collection to prevent Out-Of-Memory (OOM) crashes.\n\nDelivered a fully functional, end-to-end Python codebase that slashed screening time to seconds, outputting a highly precise and unbiased top 100 talent shortlist.",
+      "year": "2026",
+      "tech": "RAG, ML, DL, FastAPI",
+      "image": "/uploads/1787255966514-Screenshot_20260821012908.png",
+      "pdf": null,
+      "link": "",
+      "githubLink": "https://github.com/VIVEKVRON/india-ai-hiring-challenge",
+      "demoLink": ""
+    },
+    {
+      "id": "1",
+      "title": "AGRIBOT // MULTIMODAL RAG PLATFORM",
+      "description": "Multimodal AI decision-support system featuring vector search, contextual LLM inference, and low-latency API integration.",
+      "tech": "Python, RAG Architecture, Vector DB, FastAPI, React",
+      "year": "2023",
+      "image": "/uploads/1787255368431-Agribot.png",
+      "pdf": null,
+      "link": null,
+      "githubLink": "https://github.com/VIVEKVRON/AgriBot-Smart-Farming",
+      "demoLink": "https://drive.google.com/file/d/1HpIQLyBFUeJ87O8XF15sxVKFZrmwdvhM/view?usp=sharing"
+    },
+    {
+      "id": "3",
+      "title": "ELITE TASK MANAGER // ENTERPRISE BACKEND",
+      "description": "Scalable enterprise task platform built with robust MVC patterns, Spring Security authentication, and optimized database transactions.",
+      "tech": "Java, Spring Boot 3, Spring Security, PostgreSQL, React",
+      "year": "2024",
+      "image": "/uploads/1787255614311-Screenshot_20260821012314.png",
+      "pdf": null,
+      "link": null,
+      "githubLink": "https://github.com/VIVEKVRON/elite-task-manager"
+    },
+    {
+      "id": "4",
+      "title": "CARBONTRACK // ANALYTICS PLATFORM",
+      "description": "Gamified carbon accounting platform with predictive footprint analytics and real-time metrics tracking.",
+      "tech": "React 19, Spring Boot, REST APIs, GCP",
+      "year": "2024",
+      "image": "/uploads/1787255730831-Screenshot_20260821012511.png",
+      "pdf": null,
+      "link": "https://carbon-tracker-sandy.vercel.app/",
+      "githubLink": "https://github.com/VIVEKVRON/carbon-tracker",
+      "demoLink": "https://youtu.be/YHTGDD_FMnE"
+    }
+  ],
+  "certifications": [
+    {
+      "id": "1787248191063",
+      "name": "Introduction to Software Development",
+      "issuer": "Amazon",
+      "date": "Aug 2025",
+      "link": "https://www.coursera.org/account/accomplishments/verify/5C900R8X3CO8",
+      "image": "https://drive.google.com/file/d/1ehH-7KJPLKW8IDq-0JJmum0dq0akf2Yc/view?usp=sharing"
+    },
+    {
+      "id": "1787248115322",
+      "name": "Data Structures and Algorithms",
+      "issuer": "Amazon",
+      "date": "Jul 2026",
+      "link": "https://www.coursera.org/account/accomplishments/verify/AKPZ78FHX5ZK",
+      "image": "https://drive.google.com/file/d/1m2WsQKpQ6AnIe-K-3_n7wOqXp0UjSwh-/view?usp=sharing"
+    },
+    {
+      "id": "1787248048493",
+      "name": "Programming with Java",
+      "issuer": "Amazon",
+      "date": "Jul 2026",
+      "link": "https://www.coursera.org/account/accomplishments/verify/MSK7HX769X9U",
+      "image": "https://drive.google.com/file/d/1XPHobGtG924JXsFyY3AXhr4aOYRYuOB0/view?usp=sharing"
+    },
+    {
+      "id": "1787247935758",
+      "name": "Full Stack Web Development",
+      "issuer": "Amazon",
+      "date": "Jul 2026",
+      "link": "https://www.coursera.org/account/accomplishments/verify/OWQ5YUXJ7Z7I",
+      "image": "https://drive.google.com/file/d/1trXYebPKca6Qe32DtCXOQ_MD7rQtItQ5/view?usp=sharing"
+    },
+    {
+      "id": "1787247843297",
+      "name": "Database Management with Java and SQL",
+      "issuer": "Amazon",
+      "date": "Jul 2026",
+      "link": "https://www.coursera.org/account/accomplishments/verify/G8GC0XVVV3WG",
+      "image": "https://drive.google.com/file/d/13OePnDBY2hiFI8m5z23CmC1_kHO0pPGC/view?usp=sharing"
+    },
+    {
+      "id": "1787247780720",
+      "name": "Generative AI in Software Development",
+      "issuer": "Amazon",
+      "date": "Jul 2026",
+      "link": "https://www.coursera.org/account/accomplishments/verify/7IKE16D6AAIX",
+      "image": "https://drive.google.com/file/d/1gdF0_NE2t9dqFVsNaj8I2n-AkkXa-1mh/view?usp=sharing"
+    },
+    {
+      "id": "1787247694641",
+      "name": "Application Development",
+      "issuer": "Amazon",
+      "date": "Jul 2026",
+      "link": "https://www.coursera.org/account/accomplishments/verify/V9WLRRWB3TXO",
+      "image": "https://drive.google.com/file/d/1l1VAahxDGa2OzLeOX1q2WwyuckXbf4LR/view?usp=sharing"
+    },
+    {
+      "id": "1",
+      "name": "Amazon Junior Software Developer Professional Certificate",
+      "issuer": "Amazon",
+      "date": "Jul 2026",
+      "link": "https://www.coursera.org/account/accomplishments/specialization/DQRJLZOPFRVC",
+      "image": "https://drive.google.com/file/d/1cofmRg92YeoIBFiT8TIDqO0sFWVW-Ak9/view?usp=sharing"
+    },
+    {
+      "id": "2",
+      "name": "Google Cloud Computing Foundations Certificate",
+      "issuer": "Google Cloud",
+      "date": "Apr 2026",
+      "link": "https://www.credly.com/badges/7f7cf90b-814b-41a1-895d-95fb4d9c43f1/",
+      "image": "https://drive.google.com/file/d/1P47BPOgpaBW30ycIBitOmfoERLltnyBg/view?usp=sharing"
+    },
+    {
+      "id": "4",
+      "name": "Artificial Intelligence Fundamentals",
+      "issuer": "AI Certifications",
+      "date": "Sep 2025",
+      "link": "https://www.credly.com/badges/87851d4f-eeed-4189-9528-cfa7090b6a9e/",
+      "image": "https://drive.google.com/file/d/1Kb1hRlkkbWRgozzPyQSUBdw0-y5zG2wU/view?usp=sharing"
+    },
+    {
+      "id": "5",
+      "name": "Project Management Fundamentals",
+      "issuer": "PMI",
+      "date": "Dec 2025",
+      "link": "https://www.credly.com/badges/eb230c16-b577-42c6-a22f-4862238a3344/"
+    }
+  ],
+  "research": [
+    {
+      "id": "1",
+      "type": "IEEE Conference Paper — Under Peer Review",
+      "title": "Performance and Efficiency Trade-offs in Automated Waste Sorting between CNN and YOLO",
+      "description": "Conducted comparative analysis of CNN and YOLO architectures for automated waste classification, evaluating accuracy, inference speed, and computational efficiency trade-offs.",
+      "link": null
+    },
+    {
+      "id": "2",
+      "type": "IEEE Conference Paper — Under Peer Review",
+      "title": "AgriBot: A Hybrid Multimodal Architecture Integrating Deep Learning and RAG for Precision Agriculture",
+      "description": "Co-authored a paper presenting a novel multimodal system combining deep learning with RAG pipelines to deliver context-aware agricultural recommendations.",
+      "link": null
+    }
+  ],
+  "hackathons": [
+    {
+      "id": "1787253384988",
+      "title": "Prompt Wars Challenge 3",
+      "status": "Participant",
+      "description": "I recently competed in PromptWars Virtual, an incredible initiative organized by Google for Developers and Hack2skill. It was an intense sprint that pushed my software engineering limits, and I am proud to announce that I have received a Certificate of Appreciation for my work. \n\nKey Highlights from the Event:\n\n▶️Successfully architected and submitted a verified Generative AI solution for Challenge 3. \n▶️Achieved a final AI Evaluation Score of 91.13.\n▶️Secured a global rank of 956 out of 36,369 participants (Top 3%) on the Challenge 3 Leaderboard.\n▶️Recognized for proactive participation and technical dedication to shaping next-generation AI solutions. ",
+      "link": "https://certificate.hack2skill.com/verify/2026H2S06PWVCHL3-A00558",
+      "image": "https://drive.google.com/file/d/1pdlrldy13ssUqkZB1gOwo64qRD7ipx35/view?usp=sharing"
+    },
+    {
+      "id": "1787253507985",
+      "title": "Prompt Wars Challenge 4",
+      "status": "Participant",
+      "description": "As a Lead Architect & Full-Stack Developer, my goal was to engineer a live solution capable of handling real-time crowd dynamics and multilingual fan assistance at scale. \nHere is a look at what powers the application:\n⚙️ Tech Stack & Architecture: \n🔹 Backend: Java 21 & Spring Boot 3.x for a robust, high-performance API. \n🔹 Database: Supabase with PostgreSQL for relational mapping, and pgvector for storing rich GenAI embeddings.\n🔹 Authentication: Supabase Auth with custom role-based JWTs mapping directly to Spring Security for strict endpoint protection (e.g., isolating Staff from Fans). \n🔹 Frontend: A clean, responsive Vanilla JS/CSS architecture generated dynamically using Stitch MCP components. \n🔹 AI/RAG: A Retrieval-Augmented Generation (RAG) assistant for fans that searches stadium maps and transit data to answer questions seamlessly in multiple languages. \n🔹 DevOps: Fully Dockerized, Kubernetes-ready, and deployed live on Render with PgBouncer connection pooling.\n",
+      "link": "",
+      "image": ""
+    },
+    {
+      "id": "1787253786648",
+      "title": "Techwhiz Arena",
+      "status": "Winner",
+      "description": "Tech Quiz hosted at Tech Fest 2026 MS Engineering College, Bangalore",
+      "link": "",
+      "image": "https://drive.google.com/file/d/1e-5BofpM1hfmlGRE1mZqPbXCgrBHLhpG/view?usp=sharing"
+    },
+    {
+      "id": "1787254011586",
+      "title": "Poster Sphere",
+      "status": "Winner",
+      "description": "Poster Presentation hosted at Tech Fest 2026 MS Engineering College, Bangalore",
+      "link": "",
+      "image": "https://drive.google.com/file/d/1H3scygZzt70XTnoLzcQuKfXGtgqsDenB/view?usp=sharing"
+    },
+    {
+      "id": "1787254173493",
+      "title": "Bug Blitz",
+      "status": "Winner",
+      "description": "Bug Bounty hosted at Tech Fest 2026 MS Engineering College, Bangalore",
+      "link": "",
+      "image": "https://drive.google.com/file/d/1MuD4Q4MM_FPDWBnB-UrbLiZJd0auXhqN/view?usp=sharing"
+    },
+    {
+      "id": "1787254312648",
+      "title": "Algo Rush",
+      "status": "Winner",
+      "description": "Algo Code hosted at Tech Fest 2026 MS Engineering College, Bangalore",
+      "link": "",
+      "image": "https://drive.google.com/file/d/1fypvV3BffbU7oJCQpOxIZmt5Swb_syWY/view?usp=sharing"
+    }
+  ],
+  "education": [
+    {
+      "id": "1",
+      "level": "10th / SSC",
+      "institution": "Lamington Boys High School, Hubli",
+      "score": "83.84%"
+    },
+    {
+      "id": "2",
+      "level": "PUC / Intermediate",
+      "institution": "K H Patil PU Science College, Hubli",
+      "score": "87.83%"
+    },
+    {
+      "id": "3",
+      "level": "B.E. Computer Science",
+      "institution": "M S Engineering College",
+      "score": "CGPA: 8.67"
+    }
+  ]
+}
