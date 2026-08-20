@@ -45,7 +45,7 @@ async function checkAndRecordAttempt(ip: string, reset: boolean = false): Promis
 }
 
 export async function POST(req: NextRequest) {
-  const ip = req.ip || req.headers.get("x-forwarded-for")?.split(",")[0] || req.headers.get("x-real-ip") || "unknown";
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0] || req.headers.get("x-real-ip") || "unknown";
   
   // First check if they are already locked out
   let data: any = {};

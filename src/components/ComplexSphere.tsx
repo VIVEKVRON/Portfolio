@@ -61,6 +61,7 @@ function DoubleSphereCloud({ color = "#ffffff" }: { color?: string }) {
     <group ref={groupRef}>
       <points ref={pointsRef}>
         <bufferGeometry>
+          {/* @ts-ignore */}
           <bufferAttribute
             attach="attributes-position"
             count={positions.length / 3}
