@@ -116,6 +116,7 @@ const translations = {
 type LangType = "en" | "kn" | "hi";
 
 import { useLanguage } from "./LanguageProvider";
+import { submitContactMessage } from "@/app/actions/contact";
 
 export default function Portfolio({ dbData }: { dbData: any }) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
