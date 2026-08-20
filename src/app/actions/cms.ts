@@ -54,7 +54,7 @@ export async function uploadFile(formData: FormData) {
 
     // Note: /tmp uploads won't be accessible via public URL in Vercel. 
     // We would need Supabase Storage for persistent Vercel uploads.
-    return { success: true, url: isProd ? \`/api/tmp-image?file=\${fileName}\` : \`/uploads/\${fileName}\` };
+    return { success: true, url: isProd ? `/api/tmp-image?file=${fileName}` : `/uploads/${fileName}` };
   } catch (e) {
     console.error("Upload Error:", e);
     throw new Error("Upload failed. Vercel filesystem is read-only.");
