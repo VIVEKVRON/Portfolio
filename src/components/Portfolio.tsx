@@ -611,13 +611,19 @@ export default function Portfolio({ dbData }: { dbData: any }) {
                   <h2 className="text-2xl font-sans tracking-widest text-foreground mb-12">{t.connect}</h2>
                   <form 
                      className="flex flex-col w-full text-muted-foreground normal-case h-full gap-8"
-                     action={async (formData) => {
-                       const res = await submitContactMessage(formData);
-                       if (res.success) {
-                         alert("Message sent securely to the database!");
-                         (document.getElementById("contactForm") as HTMLFormElement).reset();
-                       } else {
-                         alert("Error sending message: " + res.error);
+                     onSubmit={async (e) => {
+                       e.preventDefault();
+                       const formData = new FormData(e.currentTarget);
+                       try {
+                         const res = await submitContactMessage(formData);
+                         if (res.success) {
+                           alert("Message sent securely to the database!");
+                           (document.getElementById("contactForm") as HTMLFormElement).reset();
+                         } else {
+                           alert("Error sending message: " + res.error);
+                         }
+                       } catch (err) {
+                         alert("Network Error. Please try again.");
                        }
                      }}
                      id="contactForm"
