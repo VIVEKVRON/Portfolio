@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import fs from "fs/promises";
 import path from "path";
 
-const rlPath = path.join(process.cwd(), "src/data/ratelimit.json");
+const rlPath = process.env.NODE_ENV === "production" ? "/tmp/ratelimit.json" : path.join(process.cwd(), "src/data/ratelimit.json");
 
 async function checkAndRecordAttempt(ip: string, reset: boolean = false): Promise<{ allowed: boolean, remaining: number }> {
   let data: any = {};

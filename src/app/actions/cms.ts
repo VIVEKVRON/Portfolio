@@ -4,21 +4,36 @@ import fs from "fs/promises";
 import path from "path";
 import { revalidatePath } from "next/cache";
 
-const dbPath = path.join(process.cwd(), "src/data/db.json");
+const isProd = process.env.NODE_ENV === "production";
+const originalDbPath = path.join(process.cwd(), "src/data/db.json");
+const dbPath = isProd ? "/tmp/db.json" : originalDbPath;
 
 export async function getDbData() {
-  const file = await fs.readFile(dbPath, "utf-8");
-  return JSON.parse(file);
+  try {
+    const file = await fs.readFile(dbPath, "utf-8");
+    return JSON.parse(file);
+  } catch (e) {
+    if (isProd) {
+      // If /tmp/db.json doesn't exist yet, read from the original static file
+      const file = await fs.readFile(originalDbPath, "utf-8");
+      return JSON.parse(file);
+    }
+    throw e;
+  }
 }
 
 export async function updateDbData(newData: any) {
-  // In a real scenario we'd do validation here
-  await fs.writeFile(dbPath, JSON.stringify(newData, null, 2));
-  revalidatePath("/");
-  revalidatePath("/projects");
-  revalidatePath("/certifications");
-  revalidatePath("/research");
-  return { success: true };
+  try {
+    await fs.writeFile(dbPath, JSON.stringify(newData, null, 2));
+    revalidatePath("/");
+    revalidatePath("/projects");
+    revalidatePath("/certifications");
+    revalidatePath("/research");
+    return { success: true };
+  } catch (e) {
+    console.error("CMS Save Error:", e);
+    throw new Error("Failed to save. Vercel filesystem is read-only.");
+  }
 }
 
 export async function uploadFile(formData: FormData) {
@@ -28,14 +43,20 @@ export async function uploadFile(formData: FormData) {
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
 
-  // Ensure uploads directory exists
-  const uploadsDir = path.join(process.cwd(), "public/uploads");
-  await fs.mkdir(uploadsDir, { recursive: true });
+  try {
+    const uploadsDir = isProd ? "/tmp/uploads" : path.join(process.cwd(), "public/uploads");
+    await fs.mkdir(uploadsDir, { recursive: true });
 
-  const fileName = `${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
-  const filePath = path.join(uploadsDir, fileName);
+    const fileName = `${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
+    const filePath = path.join(uploadsDir, fileName);
 
-  await fs.writeFile(filePath, buffer);
+    await fs.writeFile(filePath, buffer);
 
-  return { success: true, url: `/uploads/${fileName}` };
+    // Note: /tmp uploads won't be accessible via public URL in Vercel. 
+    // We would need Supabase Storage for persistent Vercel uploads.
+    return { success: true, url: isProd ? \`/api/tmp-image?file=\${fileName}\` : \`/uploads/\${fileName}\` };
+  } catch (e) {
+    console.error("Upload Error:", e);
+    throw new Error("Upload failed. Vercel filesystem is read-only.");
+  }
 }
