@@ -665,7 +665,7 @@ export default function Portfolio({ dbData }: { dbData: any }) {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
               </button>
               <img 
-                src={selectedImage} 
+                src={selectedImage?.includes("drive.google.com/file/d/") ? `https://lh3.googleusercontent.com/d/${selectedImage.match(/\/d\/([a-zA-Z0-9_-]+)/)?.[1]}` : selectedImage} 
                 alt="Certificate" 
                 className="w-full h-full object-contain border border-border bg-background"
               />
