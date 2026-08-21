@@ -640,6 +640,40 @@ export default function Portfolio({ dbData }: { dbData: any }) {
             </div>
          </div>
       </motion.section>
+      {/* Image Modal */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedImage(null)}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm p-4 sm:p-8"
+          >
+            <motion.div
+              initial={{ scale: 0.95 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.95 }}
+              className="relative max-w-5xl w-full max-h-[90vh] flex items-center justify-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button 
+                onClick={() => setSelectedImage(null)}
+                className="absolute -top-12 right-0 text-foreground hover:text-cyan-400 transition-colors tracking-widest font-mono text-sm flex items-center gap-2"
+              >
+                [ CLOSE ]
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+              </button>
+              <img 
+                src={selectedImage} 
+                alt="Certificate" 
+                className="w-full h-full object-contain border border-border bg-background"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
 
     </div>
   );
