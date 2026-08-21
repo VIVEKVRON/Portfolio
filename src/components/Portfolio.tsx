@@ -654,7 +654,7 @@ export default function Portfolio({ dbData }: { dbData: any }) {
               initial={{ scale: 0.95 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.95 }}
-              className="relative max-w-5xl w-full max-h-[90vh] flex items-center justify-center"
+              className="relative flex items-center justify-center"
               onClick={(e) => e.stopPropagation()}
             >
               <button 
@@ -667,7 +667,7 @@ export default function Portfolio({ dbData }: { dbData: any }) {
               <img 
                 src={selectedImage?.includes("drive.google.com/file/d/") ? `https://lh3.googleusercontent.com/d/${selectedImage.match(/\/d\/([a-zA-Z0-9_-]+)/)?.[1]}` : selectedImage} 
                 alt="Certificate" 
-                className="w-full h-full object-contain border border-border bg-background"
+                className="max-w-[90vw] max-h-[85vh] w-auto h-auto object-contain border border-border bg-background shadow-2xl"
               />
             </motion.div>
           </motion.div>
