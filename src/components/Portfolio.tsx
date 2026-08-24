@@ -648,7 +648,7 @@ export default function Portfolio({ dbData }: { dbData: any }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedImage(null)}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm p-4 sm:p-8"
+            className="fixed inset-0 z-[1000] flex items-center justify-center bg-background/80 backdrop-blur-sm p-4 sm:p-8"
           >
             <motion.div
               initial={{ scale: 0.95 }}
@@ -659,7 +659,7 @@ export default function Portfolio({ dbData }: { dbData: any }) {
             >
               <button 
                 onClick={() => setSelectedImage(null)}
-                className="absolute -top-10 right-0 md:right-4 z-50 text-foreground hover:text-cyan-400 transition-colors tracking-widest font-mono text-sm flex items-center gap-2 bg-background/50 backdrop-blur-md px-4 py-2 border border-border"
+                className="absolute -top-10 right-0 md:right-4 z-[1000] text-foreground hover:text-cyan-400 transition-colors tracking-widest font-mono text-sm flex items-center gap-2 bg-background/50 backdrop-blur-md px-4 py-2 border border-border"
               >
                 [ CLOSE ]
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
