@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { updateDbData, uploadFile } from "@/app/actions/cms";
+import { getMessages, deleteMessage } from "@/app/actions/contact";
 
 export default function AdminDashboardClient({ initialData }: { initialData: any }) {
   const [data, setData] = useState(initialData);
@@ -10,9 +11,9 @@ export default function AdminDashboardClient({ initialData }: { initialData: any
   const [saveStatus, setSaveStatus] = useState("");
   const [messages, setMessages] = useState<any[]>([]);
 
-  require("react").useEffect(() => {
+  useEffect(() => {
     if (activeTab === "INBOX") {
-      import("@/app/actions/contact").then(m => m.getMessages()).then(res => setMessages(res || []));
+      getMessages().then(res => setMessages(res || []));
     }
   }, [activeTab]);
 
@@ -473,7 +474,7 @@ export default function AdminDashboardClient({ initialData }: { initialData: any
                       <button 
                         onClick={async () => {
                           if (confirm("Delete this message?")) {
-                            await import("@/app/actions/contact").then(m => m.deleteMessage(msg.id));
+                            await deleteMessage(msg.id);
                             setMessages(messages.filter((m: any) => m.id !== msg.id));
                           }
                         }}
