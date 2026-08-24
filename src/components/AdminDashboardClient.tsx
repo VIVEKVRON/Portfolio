@@ -59,6 +59,20 @@ export default function AdminDashboardClient({ initialData }: { initialData: any
     }
   };
 
+  const moveItem = (arrayName: string, index: number, direction: 'up' | 'down') => {
+    const arr = [...(data[arrayName] || [])];
+    if (direction === 'up' && index > 0) {
+      const temp = arr[index];
+      arr[index] = arr[index - 1];
+      arr[index - 1] = temp;
+    } else if (direction === 'down' && index < arr.length - 1) {
+      const temp = arr[index];
+      arr[index] = arr[index + 1];
+      arr[index + 1] = temp;
+    }
+    setData({ ...data, [arrayName]: arr });
+  };
+
   const updateProfile = (field: string, value: string) => {
     setData({ ...data, profile: { ...data.profile, [field]: value } });
   };
@@ -181,15 +195,14 @@ export default function AdminDashboardClient({ initialData }: { initialData: any
             
             {data.projects.map((proj: any, idx: number) => (
               <div key={proj.id} className="border border-border p-6 flex flex-col gap-4 relative">
-                <button 
-                  onClick={() => {
-                    const newProjects = data.projects.filter((p: any) => p.id !== proj.id);
-                    setData({ ...data, projects: newProjects });
-                  }}
-                  className="absolute top-4 right-4 text-red-500 hover:text-red-400"
-                >
-                  DELETE
-                </button>
+                <div className="absolute top-4 right-4 flex gap-4 text-xs font-mono z-10">
+    <button disabled={idx === 0} onClick={() => moveItem("projects", idx, "up")} className="hover:text-foreground disabled:opacity-30">UP</button>
+    <button disabled={idx === (data.projects || []).length - 1} onClick={() => moveItem("projects", idx, "down")} className="hover:text-foreground disabled:opacity-30">DOWN</button>
+    <button onClick={() => {
+      const newProjects = data.projects.filter((item: any) => item.id !== proj.id);
+      setData({ ...data, projects: newProjects });
+    }} className="text-red-500 hover:text-red-400">DELETE</button>
+  </div>
                 
                 <input 
                   type="text" 
@@ -270,15 +283,14 @@ export default function AdminDashboardClient({ initialData }: { initialData: any
             </button>
             {data.certifications.map((cert: any, idx: number) => (
               <div key={cert.id} className="border border-border p-6 grid grid-cols-1 md:grid-cols-2 gap-4 relative">
-                <button 
-                  onClick={() => {
-                    const newCerts = data.certifications.filter((c: any) => c.id !== cert.id);
-                    setData({ ...data, certifications: newCerts });
-                  }}
-                  className="absolute top-4 right-4 text-red-500 hover:text-red-400"
-                >
-                  DELETE
-                </button>
+                <div className="absolute top-4 right-4 flex gap-4 text-xs font-mono z-10">
+    <button disabled={idx === 0} onClick={() => moveItem("certifications", idx, "up")} className="hover:text-foreground disabled:opacity-30">UP</button>
+    <button disabled={idx === (data.certifications || []).length - 1} onClick={() => moveItem("certifications", idx, "down")} className="hover:text-foreground disabled:opacity-30">DOWN</button>
+    <button onClick={() => {
+      const newCerts = data.certifications.filter((item: any) => item.id !== cert.id);
+      setData({ ...data, certifications: newCerts });
+    }} className="text-red-500 hover:text-red-400">DELETE</button>
+  </div>
                 <input type="text" value={cert.name || ""} onChange={(e) => {
                   const newCerts = [...data.certifications];
                   newCerts[idx].name = e.target.value;
@@ -324,15 +336,14 @@ export default function AdminDashboardClient({ initialData }: { initialData: any
             </button>
             {(data.education || []).map((ed: any, idx: number) => (
               <div key={ed.id} className="border border-border p-6 flex flex-col gap-4 relative">
-                <button 
-                  onClick={() => {
-                    const newEds = data.education.filter((e: any) => e.id !== ed.id);
-                    setData({ ...data, education: newEds });
-                  }}
-                  className="absolute top-4 right-4 text-red-500 hover:text-red-400"
-                >
-                  DELETE
-                </button>
+                <div className="absolute top-4 right-4 flex gap-4 text-xs font-mono z-10">
+    <button disabled={idx === 0} onClick={() => moveItem("education", idx, "up")} className="hover:text-foreground disabled:opacity-30">UP</button>
+    <button disabled={idx === (data.education || []).length - 1} onClick={() => moveItem("education", idx, "down")} className="hover:text-foreground disabled:opacity-30">DOWN</button>
+    <button onClick={() => {
+      const newEds = data.education.filter((item: any) => item.id !== ed.id);
+      setData({ ...data, education: newEds });
+    }} className="text-red-500 hover:text-red-400">DELETE</button>
+  </div>
                 <input type="text" value={ed.level || ""} onChange={(e) => {
                   const newEds = [...data.education];
                   newEds[idx].level = e.target.value;
@@ -372,15 +383,14 @@ export default function AdminDashboardClient({ initialData }: { initialData: any
               </button>
               {(data.research || []).map((res: any, idx: number) => (
                 <div key={res.id} className="border border-border p-6 flex flex-col gap-4 relative">
-                  <button 
-                    onClick={() => {
-                      const newRes = data.research.filter((r: any) => r.id !== res.id);
-                      setData({ ...data, research: newRes });
-                    }}
-                    className="absolute top-4 right-4 text-red-500 hover:text-red-400"
-                  >
-                    DELETE
-                  </button>
+                  <div className="absolute top-4 right-4 flex gap-4 text-xs font-mono z-10">
+    <button disabled={idx === 0} onClick={() => moveItem("research", idx, "up")} className="hover:text-foreground disabled:opacity-30">UP</button>
+    <button disabled={idx === (data.research || []).length - 1} onClick={() => moveItem("research", idx, "down")} className="hover:text-foreground disabled:opacity-30">DOWN</button>
+    <button onClick={() => {
+      const newRes = data.research.filter((item: any) => item.id !== res.id);
+      setData({ ...data, research: newRes });
+    }} className="text-red-500 hover:text-red-400">DELETE</button>
+  </div>
                   <input type="text" value={res.type || ""} onChange={(e) => {
                     const newRes = [...data.research];
                     newRes[idx].type = e.target.value;
@@ -415,15 +425,14 @@ export default function AdminDashboardClient({ initialData }: { initialData: any
               </button>
               {(data.hackathons || []).map((hack: any, idx: number) => (
                 <div key={hack.id} className="border border-border p-6 flex flex-col gap-4 relative">
-                  <button 
-                    onClick={() => {
-                      const newHacks = data.hackathons.filter((h: any) => h.id !== hack.id);
-                      setData({ ...data, hackathons: newHacks });
-                    }}
-                    className="absolute top-4 right-4 text-red-500 hover:text-red-400"
-                  >
-                    DELETE
-                  </button>
+                  <div className="absolute top-4 right-4 flex gap-4 text-xs font-mono z-10">
+    <button disabled={idx === 0} onClick={() => moveItem("hackathons", idx, "up")} className="hover:text-foreground disabled:opacity-30">UP</button>
+    <button disabled={idx === (data.hackathons || []).length - 1} onClick={() => moveItem("hackathons", idx, "down")} className="hover:text-foreground disabled:opacity-30">DOWN</button>
+    <button onClick={() => {
+      const newHacks = data.hackathons.filter((item: any) => item.id !== hack.id);
+      setData({ ...data, hackathons: newHacks });
+    }} className="text-red-500 hover:text-red-400">DELETE</button>
+  </div>
                   <input type="text" value={hack.status || ""} onChange={(e) => {
                     const newHacks = [...data.hackathons];
                     newHacks[idx].status = e.target.value;
