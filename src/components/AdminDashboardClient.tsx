@@ -31,6 +31,45 @@ export default function AdminDashboardClient({ initialData }: { initialData: any
     }
   };
 
+  
+  const handleMultipleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, path: string[]) => {
+    if (!e.target.files?.length) return;
+    setLoading(true);
+    setSaveStatus("UPLOADING MULTIPLE...");
+    
+    try {
+      const urls: string[] = [];
+      for (let i = 0; i < e.target.files.length; i++) {
+        const formData = new FormData();
+        formData.append("file", e.target.files[i]);
+        const res = await uploadFile(formData);
+        if (res.success && res.url) {
+          urls.push(res.url);
+        }
+      }
+      
+      if (urls.length > 0) {
+        const newData = { ...data };
+        let current = newData;
+        for (let i = 0; i < path.length - 1; i++) {
+          current = current[path[i]];
+        }
+        
+        // Append to existing gallery array or create new
+        const existing = current[path[path.length - 1]] || [];
+        current[path[path.length - 1]] = [...(Array.isArray(existing) ? existing : [existing]), ...urls].filter(Boolean);
+        
+        setData(newData);
+        setSaveStatus("UPLOAD COMPLETE");
+        setTimeout(() => setSaveStatus(""), 3000);
+      }
+    } catch (e) {
+      setSaveStatus("UPLOAD FAILED");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, fieldName: string, path: string[]) => {
     if (!e.target.files?.[0]) return;
     setLoading(true);

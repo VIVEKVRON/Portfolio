@@ -130,6 +130,7 @@ export default function Portfolio({ dbData }: { dbData: any }) {
   const sphereContainerRef = useRef<HTMLDivElement>(null);
   const projects = dbData.projects || initialProjects;
   const [currentProjectIdx, setCurrentProjectIdx] = useState(0);
+    const [currentGalleryIdx, setCurrentGalleryIdx] = useState(0);
   const { theme } = useTheme();
   const { t } = useLanguage();
 
@@ -247,7 +248,7 @@ export default function Portfolio({ dbData }: { dbData: any }) {
             {projects.length > 0 && (
               <div className="w-full flex h-[60px]">
                 <button 
-                  onClick={() => setCurrentProjectIdx((prev) => (prev - 1 + projects.length) % projects.length)}
+                  onClick={() => { setCurrentProjectIdx((prev) => (prev - 1 + projects.length) % projects.length); setCurrentGalleryIdx(0); }}
                   className="w-[60px] h-full flex justify-center items-center border-r border-border hover:bg-foreground hover:text-background transition-colors text-muted-foreground"
                 >
                   &lt;
@@ -273,7 +274,7 @@ export default function Portfolio({ dbData }: { dbData: any }) {
                 </div>
                 
                 <button 
-                  onClick={() => setCurrentProjectIdx((prev) => (prev + 1) % projects.length)}
+                  onClick={() => { setCurrentProjectIdx((prev) => (prev + 1) % projects.length); setCurrentGalleryIdx(0); }}
                   className="w-[60px] h-full flex justify-center items-center border-l border-border hover:bg-foreground hover:text-background transition-colors text-muted-foreground"
                 >
                   &gt;
