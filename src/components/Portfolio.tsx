@@ -117,6 +117,7 @@ type LangType = "en" | "kn" | "hi";
 
 import { useLanguage } from "./LanguageProvider";
 import { submitContactMessage } from "@/app/actions/contact";
+import DynamicText from "./DynamicText";
 
 export default function Portfolio({ dbData }: { dbData: any }) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -233,10 +234,10 @@ export default function Portfolio({ dbData }: { dbData: any }) {
                      {projects[currentProjectIdx]?.year && <span className="tracking-widest">{projects[currentProjectIdx].year}</span>}
                    </div>
                    <h3 className="text-2xl font-sans text-foreground mb-4 leading-tight">
-                     {projects[currentProjectIdx]?.title}
+                     <DynamicText text={projects[currentProjectIdx]?.title || ""} />
                    </h3>
                    <p className="text-muted-foreground normal-case leading-relaxed whitespace-pre-wrap">
-                     {projects[currentProjectIdx]?.description}
+                     <DynamicText text={projects[currentProjectIdx]?.description || ""} />
                    </p>
                 </div>
               </div>
@@ -268,7 +269,7 @@ export default function Portfolio({ dbData }: { dbData: any }) {
                 )}
 
                 <div className="flex-1 flex justify-center items-center text-foreground font-sans text-sm tracking-widest lowercase">
-                  {projects[currentProjectIdx]?.title.split('//')[0]?.trim() || projects[currentProjectIdx]?.title}
+                  <DynamicText text={projects[currentProjectIdx]?.title.split('//')[0]?.trim() || projects[currentProjectIdx]?.title || ""} />
                 </div>
                 
                 <button 
@@ -403,7 +404,7 @@ export default function Portfolio({ dbData }: { dbData: any }) {
            {dbData.education?.map((ed: any) => (
              <div key={ed.id} className="flex-1 p-12 border-b md:border-b-0 md:border-r border-border flex flex-col items-center text-center relative z-10 group hover:bg-muted/10 transition-colors">
                 <div className="w-4 h-4 bg-background border-2 border-border rounded-full mb-8 group-hover:border-foreground transition-colors shadow-[0_0_15px_rgba(0,0,0,0)] group-hover:shadow-foreground/50"></div>
-                <h3 className="text-xl font-sans text-foreground mb-4">{ed.level}</h3>
+                <h3 className="text-xl font-sans text-foreground mb-4"><DynamicText text={ed.level} /></h3>
                 <p className="text-muted-foreground mb-4 lowercase tracking-widest leading-relaxed">
                    {ed.institution.split(',').map((part: string, i: number) => (
                       <span key={i}>{part}<br/></span>
@@ -441,11 +442,11 @@ export default function Portfolio({ dbData }: { dbData: any }) {
               {(showAllCerts ? dbData.certifications : dbData.certifications?.slice(0, 4))?.map((cert: any, idx: number) => (
                 <div key={idx} onClick={() => cert.image && setSelectedImage(cert.image)} className="flex flex-col gap-2 group cursor-pointer border border-border p-4 hover:border-foreground transition-colors">
                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
-                     <h4 className="text-foreground text-lg group-hover:text-cyan-400 transition-colors">{cert.name}</h4>
-                     <span className="text-xs font-mono text-muted-foreground/50 whitespace-nowrap sm:ml-4">{cert.date}</span>
+                     <h4 className="text-foreground text-lg group-hover:text-cyan-400 transition-colors"><DynamicText text={cert.name} /></h4>
+                     <span className="text-xs font-mono text-muted-foreground/50 whitespace-nowrap sm:ml-4"><DynamicText text={cert.date} /></span>
                    </div>
                    <div className="flex justify-between items-end mt-2">
-    <div className="text-muted-foreground text-sm uppercase tracking-widest">{cert.issuer}</div>
+    <div className="text-muted-foreground text-sm uppercase tracking-widest"><DynamicText text={cert.issuer} /></div>
     {cert.image && (
          <button onClick={(e) => { e.stopPropagation(); setSelectedImage(cert.image); }} className="flex items-center gap-2 text-[10px] font-mono text-muted-foreground hover:text-cyan-400 transition-colors uppercase tracking-widest border border-border px-3 py-1 hover:border-cyan-400">
            [ VIEW CERT ]
@@ -482,18 +483,10 @@ export default function Portfolio({ dbData }: { dbData: any }) {
                 {(showAllResearch ? dbData.research : dbData.research?.slice(0, 3))?.map((res: any, idx: number) => (
                   <div key={`res-${idx}`} className="flex flex-col gap-2 relative pl-6 border-l border-border hover:border-cyan-400 transition-colors">
                      <div className="absolute top-2 -left-[5px] w-2 h-2 rounded-full bg-background border border-cyan-400"></div>
-                     <span className="text-[10px] uppercase tracking-widest text-cyan-400">{res.type}</span>
-                     <h4 className="text-foreground text-lg leading-tight">{res.title}</h4>
+                     <span className="text-[10px] uppercase tracking-widest text-cyan-400"><DynamicText text={res.type} /></span>
+                     <h4 className="text-foreground text-lg leading-tight"><DynamicText text={res.title} /></h4>
                      <p className="text-muted-foreground text-sm leading-relaxed normal-case mt-1 whitespace-pre-wrap">
-  {expandedDesc[`res-${idx}`] || !res.description || res.description.length <= 150 ? res.description : `${res.description.substring(0, 150)}...`}
-  {res.description && res.description.length > 150 && (
-    <button 
-      onClick={(e) => { e.stopPropagation(); toggleDesc(`res-${idx}`); }} 
-      className="text-cyan-400 hover:text-cyan-300 ml-2 font-bold cursor-pointer inline-block"
-    >
-      {expandedDesc[`res-${idx}`] ? "less" : "more"}
-    </button>
-  )}
+  <DynamicText text={res.description} truncateLength={150} isExpanded={expandedDesc[`res-${idx}`]} onToggle={() => toggleDesc(`res-${idx}`)} toggleClassName="text-cyan-400 hover:text-cyan-300 ml-2 font-bold cursor-pointer inline-block" />
 </p>
                   </div>
                 ))}
@@ -513,7 +506,7 @@ export default function Portfolio({ dbData }: { dbData: any }) {
                   <div key={`hack-${idx}`} className="flex flex-col gap-2 relative pl-6 border-l border-border hover:border-purple-400 transition-colors">
                      <div className="absolute top-2 -left-[5px] w-2 h-2 rounded-full bg-background border border-purple-400"></div>
                      <div className="flex justify-between items-center w-full">
-    <span className="text-[10px] uppercase tracking-widest text-purple-400">{hack.status}</span>
+    <span className="text-[10px] uppercase tracking-widest text-purple-400"><DynamicText text={hack.status} /></span>
     <div className="flex gap-4 items-center">
        {hack.image && (
           <button onClick={() => setSelectedImage(hack.image)} className="inline-flex items-center gap-2 text-[10px] font-mono text-muted-foreground hover:text-purple-400 transition-colors uppercase tracking-widest">
@@ -529,17 +522,9 @@ export default function Portfolio({ dbData }: { dbData: any }) {
        )}
     </div>
   </div>
-                     <h4 className="text-foreground text-lg leading-tight">{hack.title}</h4>
+                     <h4 className="text-foreground text-lg leading-tight"><DynamicText text={hack.title} /></h4>
                      <p className="text-muted-foreground text-sm leading-relaxed normal-case mt-1 whitespace-pre-wrap">
-  {expandedDesc[`hack-${idx}`] || !hack.description || hack.description.length <= 150 ? hack.description : `${hack.description.substring(0, 150)}...`}
-  {hack.description && hack.description.length > 150 && (
-    <button 
-      onClick={(e) => { e.stopPropagation(); toggleDesc(`hack-${idx}`); }} 
-      className="text-purple-400 hover:text-purple-300 ml-2 font-bold cursor-pointer inline-block"
-    >
-      {expandedDesc[`hack-${idx}`] ? "less" : "more"}
-    </button>
-  )}
+  <DynamicText text={hack.description} truncateLength={150} isExpanded={expandedDesc[`hack-${idx}`]} onToggle={() => toggleDesc(`hack-${idx}`)} toggleClassName="text-purple-400 hover:text-purple-300 ml-2 font-bold cursor-pointer inline-block" />
 </p>
                   </div>
                 ))}
