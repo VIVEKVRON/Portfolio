@@ -121,6 +121,8 @@ import { submitContactMessage } from "@/app/actions/contact";
 export default function Portfolio({ dbData }: { dbData: any }) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [showAllCerts, setShowAllCerts] = useState(false);
+  const [showAllResearch, setShowAllResearch] = useState(false);
+  const [showAllHackathons, setShowAllHackathons] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const sphereContainerRef = useRef<HTMLDivElement>(null);
   const projects = dbData.projects || initialProjects;
@@ -475,7 +477,7 @@ export default function Portfolio({ dbData }: { dbData: any }) {
               
               {/* Research */}
               <div className="flex flex-col gap-6">
-                {dbData.research?.map((res: any, idx: number) => (
+                {(showAllResearch ? dbData.research : dbData.research?.slice(0, 3))?.map((res: any, idx: number) => (
                   <div key={`res-${idx}`} className="flex flex-col gap-2 relative pl-6 border-l border-border hover:border-cyan-400 transition-colors">
                      <div className="absolute top-2 -left-[5px] w-2 h-2 rounded-full bg-background border border-cyan-400"></div>
                      <span className="text-[10px] uppercase tracking-widest text-cyan-400">{res.type}</span>
@@ -484,10 +486,18 @@ export default function Portfolio({ dbData }: { dbData: any }) {
                   </div>
                 ))}
               </div>
+                {dbData.research?.length > 3 && (
+                  <button 
+                    onClick={() => setShowAllResearch(!showAllResearch)}
+                    className="w-full mt-2 py-3 border border-border text-[10px] font-mono tracking-widest text-muted-foreground hover:text-cyan-400 hover:border-cyan-400 transition-all flex items-center justify-center gap-2"
+                  >
+                    {showAllResearch ? "[ SHOW LESS ]" : `[ VIEW ALL ${dbData.research.length} PUBLICATIONS ]`}
+                  </button>
+                )}
 
-              {/* Hackathons */}
+                {/* Hackathons */}
               <div className="flex flex-col gap-6 mt-4">
-                {dbData.hackathons?.map((hack: any, idx: number) => (
+                {(showAllHackathons ? dbData.hackathons : dbData.hackathons?.slice(0, 3))?.map((hack: any, idx: number) => (
                   <div key={`hack-${idx}`} className="flex flex-col gap-2 relative pl-6 border-l border-border hover:border-purple-400 transition-colors">
                      <div className="absolute top-2 -left-[5px] w-2 h-2 rounded-full bg-background border border-purple-400"></div>
                      <div className="flex justify-between items-center w-full">
@@ -512,12 +522,18 @@ export default function Portfolio({ dbData }: { dbData: any }) {
                   </div>
                 ))}
               </div>
-
+                {dbData.hackathons?.length > 3 && (
+                  <button 
+                    onClick={() => setShowAllHackathons(!showAllHackathons)}
+                    className="w-full mt-2 py-3 border border-border text-[10px] font-mono tracking-widest text-muted-foreground hover:text-purple-400 hover:border-purple-400 transition-all flex items-center justify-center gap-2"
+                  >
+                    {showAllHackathons ? "[ SHOW LESS ]" : `[ VIEW ALL ${dbData.hackathons.length} HACKATHONS ]`}
+                  </button>
+                )}
+              </div>
             </div>
           </div>
-
-        </div>
-      </motion.section>
+        </motion.section>
 
       {/* SYSTEM BREAK (GAME) SECTION */}
       <SectionTransition from="CERTIFICATIONS & ACHIEVEMENTS" to="SYSTEM BREAK" />
