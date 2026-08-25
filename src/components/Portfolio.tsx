@@ -123,6 +123,8 @@ export default function Portfolio({ dbData }: { dbData: any }) {
   const [showAllCerts, setShowAllCerts] = useState(false);
   const [showAllResearch, setShowAllResearch] = useState(false);
   const [showAllHackathons, setShowAllHackathons] = useState(false);
+  const [expandedDesc, setExpandedDesc] = useState<Record<string, boolean>>({});
+  const toggleDesc = (id: string) => setExpandedDesc(prev => ({ ...prev, [id]: !prev[id] }));
   const containerRef = useRef<HTMLDivElement>(null);
   const sphereContainerRef = useRef<HTMLDivElement>(null);
   const projects = dbData.projects || initialProjects;
@@ -482,7 +484,17 @@ export default function Portfolio({ dbData }: { dbData: any }) {
                      <div className="absolute top-2 -left-[5px] w-2 h-2 rounded-full bg-background border border-cyan-400"></div>
                      <span className="text-[10px] uppercase tracking-widest text-cyan-400">{res.type}</span>
                      <h4 className="text-foreground text-lg leading-tight">{res.title}</h4>
-                     <p className="text-muted-foreground text-sm leading-relaxed normal-case mt-1 whitespace-pre-wrap">{res.description}</p>
+                     <p className="text-muted-foreground text-sm leading-relaxed normal-case mt-1 whitespace-pre-wrap">
+  {expandedDesc[`res-${idx}`] || !res.description || res.description.length <= 150 ? res.description : `${res.description.substring(0, 150)}...`}
+  {res.description && res.description.length > 150 && (
+    <button 
+      onClick={(e) => { e.stopPropagation(); toggleDesc(`res-${idx}`); }} 
+      className="text-cyan-400 hover:text-cyan-300 ml-2 font-bold cursor-pointer inline-block"
+    >
+      {expandedDesc[`res-${idx}`] ? "less" : "more"}
+    </button>
+  )}
+</p>
                   </div>
                 ))}
               </div>
@@ -518,7 +530,17 @@ export default function Portfolio({ dbData }: { dbData: any }) {
     </div>
   </div>
                      <h4 className="text-foreground text-lg leading-tight">{hack.title}</h4>
-                     <p className="text-muted-foreground text-sm leading-relaxed normal-case mt-1 whitespace-pre-wrap">{hack.description}</p>
+                     <p className="text-muted-foreground text-sm leading-relaxed normal-case mt-1 whitespace-pre-wrap">
+  {expandedDesc[`hack-${idx}`] || !hack.description || hack.description.length <= 150 ? hack.description : `${hack.description.substring(0, 150)}...`}
+  {hack.description && hack.description.length > 150 && (
+    <button 
+      onClick={(e) => { e.stopPropagation(); toggleDesc(`hack-${idx}`); }} 
+      className="text-purple-400 hover:text-purple-300 ml-2 font-bold cursor-pointer inline-block"
+    >
+      {expandedDesc[`hack-${idx}`] ? "less" : "more"}
+    </button>
+  )}
+</p>
                   </div>
                 ))}
               </div>
