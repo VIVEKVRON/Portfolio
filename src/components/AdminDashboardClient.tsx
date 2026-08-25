@@ -293,9 +293,23 @@ export default function AdminDashboardClient({ initialData }: { initialData: any
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="flex flex-col gap-2">
-                    <label>COVER IMAGE</label>
-                    <input type="file" accept="image/*" onChange={(e) => handleFileUpload(e, "image", ["projects", idx.toString(), "image"])} />
-                    {proj.image && <span className="text-green-500 lowercase">Uploaded: {proj.image.split('/').pop()}</span>}
+                    <label>PROJECT GALLERY (Multiple)</label>
+                    <input type="file" multiple accept="image/*" onChange={(e) => handleMultipleFileUpload(e, ["projects", idx.toString(), "gallery"])} />
+                    <div className="flex flex-col gap-1 mt-2">
+                      {(proj.gallery || (proj.image ? [proj.image] : [])).map((imgUrl: string, imgIdx: number) => (
+                        <div key={imgIdx} className="flex justify-between items-center bg-muted/10 p-2 text-xs">
+                          <span className="text-green-500 lowercase truncate max-w-[200px]">{imgUrl.split('/').pop()}</span>
+                          <button onClick={() => {
+                             const newData = { ...data };
+                             const currentGallery = [...(newData.projects[idx].gallery || (newData.projects[idx].image ? [newData.projects[idx].image] : []))];
+                             currentGallery.splice(imgIdx, 1);
+                             newData.projects[idx].gallery = currentGallery;
+                             if (newData.projects[idx].image === imgUrl) newData.projects[idx].image = null;
+                             setData(newData);
+                          }} className="text-red-500 hover:text-red-400 font-bold ml-2">X</button>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                   <div className="flex flex-col gap-2">
                     <label>CASE STUDY PDF</label>
