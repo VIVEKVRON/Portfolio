@@ -212,13 +212,49 @@ export default function Portfolio({ dbData }: { dbData: any }) {
               <div className="flex flex-col md:flex-row w-full min-h-[500px]">
                 {/* Left: Visual/Mockup */}
                 <div className="flex-1 border-b md:border-b-0 md:border-r border-border p-8 flex justify-center items-center relative overflow-hidden bg-muted/5">
-                   {projects[currentProjectIdx]?.image ? (
-                     <Image src={projects[currentProjectIdx].image} alt={projects[currentProjectIdx].title} fill className="object-contain p-4" />
-                   ) : (
-                     <div className="text-muted-foreground/30 font-mono text-sm tracking-widest uppercase">
-                       [ NO VISUAL ASSET ]
-                     </div>
-                   )}
+                   {(projects[currentProjectIdx]?.gallery?.length > 0 || projects[currentProjectIdx]?.image) ? (
+                       <>
+                         <Image 
+                           src={projects[currentProjectIdx].gallery?.length > 0 ? projects[currentProjectIdx].gallery[currentGalleryIdx] : projects[currentProjectIdx].image} 
+                           alt={projects[currentProjectIdx].title || "Project Image"} 
+                           fill 
+                           className="object-contain p-4" 
+                         />
+                         
+                         {/* Internal Gallery Controls */}
+                         {projects[currentProjectIdx]?.gallery?.length > 1 && (
+                           <>
+                             <button 
+                               onClick={(e) => { e.stopPropagation(); setCurrentGalleryIdx(prev => (prev - 1 + projects[currentProjectIdx].gallery.length) % projects[currentProjectIdx].gallery.length); }}
+                               className="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-background/50 backdrop-blur-md border border-border flex items-center justify-center text-foreground hover:bg-foreground hover:text-background transition-colors z-20"
+                             >
+                               &lt;
+                             </button>
+                             <button 
+                               onClick={(e) => { e.stopPropagation(); setCurrentGalleryIdx(prev => (prev + 1) % projects[currentProjectIdx].gallery.length); }}
+                               className="absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-background/50 backdrop-blur-md border border-border flex items-center justify-center text-foreground hover:bg-foreground hover:text-background transition-colors z-20"
+                             >
+                               &gt;
+                             </button>
+                             
+                             {/* Gallery Indicators */}
+                             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+                               {projects[currentProjectIdx].gallery.map((_: any, i: number) => (
+                                 <button
+                                   key={i} 
+                                   onClick={(e) => { e.stopPropagation(); setCurrentGalleryIdx(i); }}
+                                   className={`w-1.5 h-1.5 rounded-full transition-colors cursor-pointer ${i === currentGalleryIdx ? 'bg-foreground' : 'bg-foreground/20'}`} 
+                                 />
+                               ))}
+                             </div>
+                           </>
+                         )}
+                       </>
+                     ) : (
+                       <div className="text-muted-foreground/30 font-mono text-sm tracking-widest uppercase">
+                         [ NO VISUAL ASSET ]
+                       </div>
+                     )}
                 </div>
                 
                 {/* Middle: Tech Stack Icons */}
