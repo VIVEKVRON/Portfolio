@@ -312,7 +312,13 @@ export default function Portfolio({ dbData }: { dbData: any }) {
                      <DynamicText text={projects[currentProjectIdx]?.title || ""} />
                    </h3>
                    <p className="text-muted-foreground normal-case leading-relaxed whitespace-pre-wrap">
-                     <DynamicText text={projects[currentProjectIdx]?.description || ""} />
+                     <DynamicText 
+                         text={projects[currentProjectIdx]?.description || ""} 
+                         truncateLength={200}
+                         isExpanded={!!expandedDesc['project']}
+                         onToggle={() => toggleDesc('project')}
+                         toggleClassName="ml-2 font-mono text-[10px] uppercase tracking-widest text-foreground hover:text-cyan-400 transition-colors border-b border-border/50 hover:border-cyan-400"
+                       />
                    </p>
                 </div>
               </div>
