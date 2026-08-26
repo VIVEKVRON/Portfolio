@@ -12,7 +12,7 @@ import SineSphere from "./SineSphere";
 import OrbitSphere from "./OrbitSphere";
 import BrickBreakerGame from "./BrickBreakerGame";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import SectionTransition from "./SectionTransition";
 import MechanicalGears from "./MechanicalGears";
 import TechIcon from "./TechIcon";
@@ -128,6 +128,8 @@ export default function Portfolio({ dbData }: { dbData: any }) {
   const toggleDesc = (id: string) => setExpandedDesc(prev => ({ ...prev, [id]: !prev[id] }));
   const containerRef = useRef<HTMLDivElement>(null);
   const sphereContainerRef = useRef<HTMLDivElement>(null);
+    const projectsSectionRef = useRef<HTMLElement>(null);
+    const isProjectsInView = useInView(projectsSectionRef, { amount: 0.1 });
   const projects = dbData.projects || initialProjects;
   const [currentProjectIdx, setCurrentProjectIdx] = useState(0);
   const [isProjectHovered, setIsProjectHovered] = useState(false);
