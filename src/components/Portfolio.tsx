@@ -520,7 +520,7 @@ export default function Portfolio({ dbData }: { dbData: any }) {
           <div className="flex-1 lg:border-r border-border p-8 lg:p-12">
             <h3 className="text-xl font-sans tracking-widest text-foreground mb-8 pb-4 border-b border-border/50">CERTIFICATIONS</h3>
             <div className="flex flex-col gap-6">
-              {(showAllCerts ? dbData.certifications : dbData.certifications?.slice(0, 4))?.map((cert: any, idx: number) => (
+              {(showAllCerts ? dbData.certifications : dbData.certifications?.slice(0, 8))?.map((cert: any, idx: number) => (
                 <div key={idx} onClick={() => cert.image && setSelectedImage(cert.image)} className="flex flex-col gap-2 group cursor-pointer border border-border p-4 hover:border-foreground transition-colors">
                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
                      <h4 className="text-foreground text-lg group-hover:text-cyan-400 transition-colors"><DynamicText text={cert.name} /></h4>
@@ -544,7 +544,7 @@ export default function Portfolio({ dbData }: { dbData: any }) {
                 </div>
               ))}
             </div>
-              {dbData.certifications?.length > 4 && (
+              {dbData.certifications?.length > 8 && (
                 <button 
                   onClick={() => setShowAllCerts(!showAllCerts)}
                   className="w-full mt-4 py-3 border border-border text-[10px] font-mono tracking-widest text-muted-foreground hover:text-foreground hover:border-foreground transition-all flex items-center justify-center gap-2"
