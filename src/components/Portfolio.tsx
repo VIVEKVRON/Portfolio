@@ -213,43 +213,81 @@ export default function Portfolio({ dbData }: { dbData: any }) {
                 {/* Left: Visual/Mockup */}
                 <div className="flex-1 border-b md:border-b-0 md:border-r border-border p-8 flex justify-center items-center relative overflow-hidden bg-muted/5">
                    {(projects[currentProjectIdx]?.gallery?.length > 0 || projects[currentProjectIdx]?.image) ? (
-                       <>
-                         <Image 
-                           src={projects[currentProjectIdx].gallery?.length > 0 ? projects[currentProjectIdx].gallery[currentGalleryIdx] : projects[currentProjectIdx].image} 
-                           alt={projects[currentProjectIdx].title || "Project Image"} 
-                           fill 
-                           className="object-contain p-4" 
-                         />
-                         
-                         {/* Internal Gallery Controls */}
-                         {projects[currentProjectIdx]?.gallery?.length > 1 && (
-                           <>
-                             <button 
-                               onClick={(e) => { e.stopPropagation(); setCurrentGalleryIdx(prev => (prev - 1 + projects[currentProjectIdx].gallery.length) % projects[currentProjectIdx].gallery.length); }}
-                               className="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-background/50 backdrop-blur-md border border-border flex items-center justify-center text-foreground hover:bg-foreground hover:text-background transition-colors z-20"
-                             >
-                               &lt;
-                             </button>
-                             <button 
-                               onClick={(e) => { e.stopPropagation(); setCurrentGalleryIdx(prev => (prev + 1) % projects[currentProjectIdx].gallery.length); }}
-                               className="absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-background/50 backdrop-blur-md border border-border flex items-center justify-center text-foreground hover:bg-foreground hover:text-background transition-colors z-20"
-                             >
-                               &gt;
-                             </button>
-                             
-                             {/* Gallery Indicators */}
-                             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-                               {projects[currentProjectIdx].gallery.map((_: any, i: number) => (
-                                 <button
-                                   key={i} 
-                                   onClick={(e) => { e.stopPropagation(); setCurrentGalleryIdx(i); }}
-                                   className={`w-1.5 h-1.5 rounded-full transition-colors cursor-pointer ${i === currentGalleryIdx ? 'bg-foreground' : 'bg-foreground/20'}`} 
-                                 />
-                               ))}
-                             </div>
-                           </>
-                         )}
-                       </>
+                       <div className="w-full flex flex-col gap-2 relative">
+                         {(() => {
+                           const gallery = projects[currentProjectIdx].gallery?.length > 0 
+                             ? projects[currentProjectIdx].gallery 
+                             : (projects[currentProjectIdx].image ? [projects[currentProjectIdx].image] : []);
+                           
+                           if (gallery.length === 1) {
+                             return (
+                               <div 
+                                 className="relative w-full aspect-video cursor-pointer border border-transparent hover:border-border transition-colors group"
+                                 onClick={() => setSelectedImage(gallery[0])}
+                               >
+                                 <Image src={gallery[0]} alt="Project Asset" fill className="object-cover" />
+                                 <div className="absolute inset-0 bg-background/0 group-hover:bg-background/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                   <span className="bg-background/80 backdrop-blur-md px-4 py-2 border border-border text-foreground font-mono text-xs tracking-widest">[ VIEW ]</span>
+                                 </div>
+                               </div>
+                             );
+                           }
+
+                           if (gallery.length > 1) {
+                             const topImage = gallery[0];
+                             const bottomImages = gallery.slice(1, 4); // Take up to 3 more images
+                             const hasMore = gallery.length > 4;
+
+                             return (
+                               <div className="w-full flex flex-col gap-2">
+                                 {/* Top Big Image */}
+                                 <div 
+                                   className="relative w-full aspect-video cursor-pointer border border-transparent hover:border-border transition-colors group bg-muted/20"
+                                   onClick={() => setSelectedImage(topImage)}
+                                 >
+                                   <Image src={topImage} alt="Project Main Asset" fill className="object-cover" />
+                                   <div className="absolute inset-0 bg-background/0 group-hover:bg-background/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                     <span className="bg-background/80 backdrop-blur-md px-4 py-2 border border-border text-foreground font-mono text-xs tracking-widest">[ VIEW ]</span>
+                                   </div>
+                                 </div>
+
+                                 {/* Bottom Grid */}
+                                 <div className={`grid gap-2 ${bottomImages.length === 1 ? 'grid-cols-1' : bottomImages.length === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}>
+                                   {bottomImages.map((img: string, i: number) => {
+                                     const isLastVisible = i === 2;
+                                     
+                                     return (
+                                       <div 
+                                         key={i} 
+                                         className="relative aspect-video cursor-pointer border border-transparent hover:border-border transition-colors group overflow-hidden bg-muted/20"
+                                         onClick={() => setSelectedImage(img)}
+                                       >
+                                         <Image 
+                                           src={img} 
+                                           alt="Project Asset" 
+                                           fill 
+                                           className={`object-cover ${isLastVisible && hasMore ? 'blur-sm scale-110' : ''}`} 
+                                         />
+                                         
+                                         {isLastVisible && hasMore ? (
+                                           <div className="absolute inset-0 flex items-center justify-center bg-background/50 backdrop-blur-[2px]">
+                                             <span className="text-foreground font-mono text-xl md:text-2xl tracking-widest">+{gallery.length - 4}</span>
+                                           </div>
+                                         ) : (
+                                           <div className="absolute inset-0 bg-background/0 group-hover:bg-background/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                             <span className="bg-background/80 backdrop-blur-md px-3 py-1 border border-border text-foreground font-mono text-[10px] tracking-widest">[ VIEW ]</span>
+                                           </div>
+                                         )}
+                                       </div>
+                                     );
+                                   })}
+                                 </div>
+                               </div>
+                             );
+                           }
+                           return null;
+                         })()}
+                       </div>
                      ) : (
                        <div className="text-muted-foreground/30 font-mono text-sm tracking-widest uppercase">
                          [ NO VISUAL ASSET ]
