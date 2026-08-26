@@ -130,9 +130,19 @@ export default function Portfolio({ dbData }: { dbData: any }) {
   const sphereContainerRef = useRef<HTMLDivElement>(null);
   const projects = dbData.projects || initialProjects;
   const [currentProjectIdx, setCurrentProjectIdx] = useState(0);
-    const [currentGalleryIdx, setCurrentGalleryIdx] = useState(0);
+  const [isProjectHovered, setIsProjectHovered] = useState(false);
+  const [currentGalleryIdx, setCurrentGalleryIdx] = useState(0);
   const { theme } = useTheme();
   const { t } = useLanguage();
+
+  useEffect(() => {
+    if (isProjectHovered || projects.length <= 1) return;
+    const timer = setInterval(() => {
+      setCurrentProjectIdx((prev) => (prev + 1) % projects.length);
+      setCurrentGalleryIdx(0);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [isProjectHovered, projects.length]);
 
   // Parallax Sphere
   useEffect(() => {
@@ -207,7 +217,11 @@ export default function Portfolio({ dbData }: { dbData: any }) {
                <p className="text-muted-foreground normal-case mt-2">{t.curated}</p>
             </div>
          </div>
-         <div className="w-full flex flex-col bg-background border-b border-border">
+         <div 
+           className="w-full flex flex-col bg-background border-b border-border"
+           onMouseEnter={() => setIsProjectHovered(true)}
+           onMouseLeave={() => setIsProjectHovered(false)}
+         >
             {projects.length > 0 && (
               <div className="flex flex-col md:flex-row w-full min-h-[500px]">
                 {/* Left: Visual/Mockup */}
