@@ -138,13 +138,13 @@ export default function Portfolio({ dbData }: { dbData: any }) {
   const { t } = useLanguage();
 
   useEffect(() => {
-      if (isProjectHovered || !isProjectsInView || projects.length <= 1) return;
-      const timer = setInterval(() => {
-        setCurrentProjectIdx((prev) => (prev + 1) % projects.length);
-        setCurrentGalleryIdx(0);
-      }, 8000);
-      return () => clearInterval(timer);
-    }, [isProjectHovered, isProjectsInView, projects.length]);
+    if (!isProjectsInView || projects.length <= 1) return;
+    const timer = setTimeout(() => {
+      setCurrentProjectIdx((prev) => (prev + 1) % projects.length);
+      setCurrentGalleryIdx(0);
+    }, 8000);
+    return () => clearTimeout(timer);
+  }, [isProjectsInView, projects.length, currentProjectIdx]);
 
   // Parallax Sphere
   useEffect(() => {
@@ -221,8 +221,8 @@ export default function Portfolio({ dbData }: { dbData: any }) {
          </div>
          <div 
            className="w-full flex flex-col bg-background border-b border-border"
-           onMouseEnter={() => setIsProjectHovered(true)}
-           onMouseLeave={() => setIsProjectHovered(false)}
+           
+           
          >
             {projects.length > 0 && (
               <div className="flex flex-col md:flex-row w-full min-h-[500px]">
