@@ -226,7 +226,15 @@ export default function Portfolio({ dbData }: { dbData: any }) {
            
          >
             {projects.length > 0 && (
-              <div className="flex flex-col md:flex-row w-full min-h-[500px]">
+              <AnimatePresence mode="wait">
+              <motion.div 
+                key={currentProjectIdx}
+                initial={{ opacity: 0, filter: "blur(10px)", scale: 0.98 }}
+                animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
+                exit={{ opacity: 0, filter: "blur(10px)", scale: 0.98 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="flex flex-col md:flex-row w-full min-h-[500px]"
+              >
                 {/* Left: Visual/Mockup */}
                 <div className="flex-1 border-b md:border-b-0 md:border-r border-border p-8 flex justify-center items-center relative overflow-hidden bg-muted/5">
                    {(projects[currentProjectIdx]?.gallery?.length > 0 || projects[currentProjectIdx]?.image) ? (
@@ -338,7 +346,8 @@ export default function Portfolio({ dbData }: { dbData: any }) {
                        />
                    </p>
                 </div>
-              </div>
+              </motion.div>
+              </AnimatePresence>
             )}
             
             {/* Bottom Navigation Bar */}
