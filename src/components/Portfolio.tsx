@@ -387,6 +387,19 @@ export default function Portfolio({ dbData }: { dbData: any }) {
                 </button>
               </div>
             )}
+
+            {/* View All Github Projects */}
+            <div className="w-full border-t border-border flex h-[60px]">
+              <a 
+                href="https://github.com/VIVEKVRON?tab=repositories"
+                target="_blank"
+                rel="noreferrer"
+                className="flex-1 h-full flex justify-center items-center bg-muted/5 hover:bg-foreground hover:text-background transition-colors text-foreground tracking-widest font-mono text-xs uppercase group"
+              >
+                View all github repositories 
+                <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
+              </a>
+            </div>
          </div>
       </motion.section>
 
