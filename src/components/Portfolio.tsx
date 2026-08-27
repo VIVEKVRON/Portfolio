@@ -138,13 +138,13 @@ export default function Portfolio({ dbData }: { dbData: any }) {
   const { t } = useLanguage();
 
   useEffect(() => {
-    if (isProjectHovered || projects.length <= 1) return;
-    const timer = setInterval(() => {
-      setCurrentProjectIdx((prev) => (prev + 1) % projects.length);
-      setCurrentGalleryIdx(0);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, [isProjectHovered, projects.length]);
+      if (isProjectHovered || !isProjectsInView || projects.length <= 1) return;
+      const timer = setInterval(() => {
+        setCurrentProjectIdx((prev) => (prev + 1) % projects.length);
+        setCurrentGalleryIdx(0);
+      }, 8000);
+      return () => clearInterval(timer);
+    }, [isProjectHovered, isProjectsInView, projects.length]);
 
   // Parallax Sphere
   useEffect(() => {
