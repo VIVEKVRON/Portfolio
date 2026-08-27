@@ -1,7 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { updateDbData, uploadFile } from "@/app/actions/cms";
+import { updateDbData } from "@/app/actions/cms";
+import { createClient } from "@supabase/supabase-js";
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+const supabase = supabaseUrl && supabaseAnonKey ? createClient(supabaseUrl, supabaseAnonKey) : null;
 import { getMessages, deleteMessage } from "@/app/actions/contact";
 
 export default function AdminDashboardClient({ initialData }: { initialData: any }) {
@@ -33,70 +38,100 @@ export default function AdminDashboardClient({ initialData }: { initialData: any
 
   
   const handleMultipleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, path: string[]) => {
-    if (!e.target.files?.length) return;
-    setLoading(true);
-    setSaveStatus("UPLOADING MULTIPLE...");
-    
-    try {
-      const urls: string[] = [];
-      for (let i = 0; i < e.target.files.length; i++) {
-        const formData = new FormData();
-        formData.append("file", e.target.files[i]);
-        const res = await uploadFile(formData);
-        if (res.success && res.url) {
-          urls.push(res.url);
-        }
-      }
+      if (!e.target.files?.length) return;
+      setLoading(true);
+      setSaveStatus("UPLOADING MULTIPLE...");
       
-      if (urls.length > 0) {
-        const newData = { ...data };
-        let current = newData;
-        for (let i = 0; i < path.length - 1; i++) {
-          current = current[path[i]];
+      try {
+        const urls: string[] = [];
+        for (let i = 0; i < e.target.files.length; i++) {
+          const file = e.target.files[i];
+          if (!supabase) throw new Error("Supabase not configured");
+          
+          const fileName = `${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
+          
+          const { error } = await supabase.storage
+            .from('portfolio')
+            .upload(`uploads/${fileName}`, file, { cacheControl: '3600', upsert: false });
+
+          if (error) {
+             console.error("Upload error:", error);
+             throw error;
+          }
+          
+          const { data: publicUrlData } = supabase.storage
+            .from('portfolio')
+            .getPublicUrl(`uploads/${fileName}`);
+            
+          if (publicUrlData && publicUrlData.publicUrl) {
+            urls.push(publicUrlData.publicUrl);
+          }
         }
         
-        // Append to existing gallery array or create new
-        const existing = current[path[path.length - 1]] || [];
-        current[path[path.length - 1]] = [...(Array.isArray(existing) ? existing : [existing]), ...urls].filter(Boolean);
-        
-        setData(newData);
-        setSaveStatus("UPLOAD COMPLETE");
-        setTimeout(() => setSaveStatus(""), 3000);
+        if (urls.length > 0) {
+          const newData = { ...data };
+          let current = newData;
+          for (let i = 0; i < path.length - 1; i++) {
+            current = current[path[i]];
+          }
+          
+          // Append to existing gallery array or create new
+          const existing = current[path[path.length - 1]] || [];
+          current[path[path.length - 1]] = [...(Array.isArray(existing) ? existing : [existing]), ...urls].filter(Boolean);
+          
+          setData(newData);
+          setSaveStatus("UPLOAD COMPLETE");
+          setTimeout(() => setSaveStatus(""), 3000);
+        }
+      } catch (e) {
+        console.error(e);
+        setSaveStatus("UPLOAD FAILED");
+      } finally {
+        setLoading(false);
       }
-    } catch (e) {
-      setSaveStatus("UPLOAD FAILED");
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, fieldName: string, path: string[]) => {
-    if (!e.target.files?.[0]) return;
-    setLoading(true);
-    setSaveStatus("UPLOADING...");
-    const formData = new FormData();
-    formData.append("file", e.target.files[0]);
-    
-    try {
-      const res = await uploadFile(formData);
-      if (res.success && res.url) {
-        // Deep update
+      if (!e.target.files?.[0]) return;
+      setLoading(true);
+      setSaveStatus("UPLOADING...");
+      
+      try {
+        const file = e.target.files[0];
+        if (!supabase) throw new Error("Supabase not configured");
+        
+        const fileName = `${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
+        
+        const { error } = await supabase.storage
+          .from('portfolio')
+          .upload(`uploads/${fileName}`, file, { cacheControl: '3600', upsert: false });
+
+        if (error) {
+           console.error("Upload error:", error);
+           throw error;
+        }
+        
+        const { data: publicUrlData } = supabase.storage
+          .from('portfolio')
+          .getPublicUrl(`uploads/${fileName}`);
+        
         const newData = { ...data };
         let current = newData;
         for (let i = 0; i < path.length - 1; i++) {
           current = current[path[i]];
         }
-        current[path[path.length - 1]] = res.url;
+        current[path[path.length - 1]] = publicUrlData.publicUrl;
+        
         setData(newData);
         setSaveStatus("UPLOAD COMPLETE");
         setTimeout(() => setSaveStatus(""), 3000);
+      } catch (e) {
+        console.error(e);
+        setSaveStatus("UPLOAD FAILED");
+      } finally {
+        setLoading(false);
       }
-    } catch (e) {
-      setSaveStatus("UPLOAD FAILED");
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
   const moveItem = (arrayName: string, index: number, direction: 'up' | 'down') => {
     const arr = [...(data[arrayName] || [])];
