@@ -206,6 +206,7 @@ export default function Portfolio({ dbData }: { dbData: any }) {
 
       {/* PROJECTS SECTION */}
       <motion.section 
+        ref={projectsSectionRef}
         id="projects"
         className="relative w-full max-w-[1400px] mt-[50px] flex flex-col z-10 px-[5vw]"
         initial={{ opacity: 0, y: 100 }}
